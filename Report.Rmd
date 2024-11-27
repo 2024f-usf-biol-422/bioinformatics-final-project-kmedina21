@@ -1,6 +1,6 @@
 ---
 title: 'Your Title Here'
-author: "Don Francisco"
+author: "Kim Medina"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 csl: bioinformatics.csl
@@ -8,7 +8,7 @@ bibliography: references.bib
 params:
   gff_file_path: "data/metadata/sars_refgenome_annotation.gff"
   vcf_dir_path: "data/11_vcf_output_for_R"
-  sra_runtable_path: "data/00_sra_runtable/SraRunTable_PRJNA656695_short_example.txt"
+  sra_runtable_path: "data/00_sra_runtable/SraRunTable.csv"
 ---
 
 ```{r setup, include = FALSE}
@@ -100,6 +100,20 @@ gene_table %>%
                              "End",
                              "Length"))
 ```
+
+```{r, average-age-of-diseased}
+diseased_only <- vcf_with_metadata %>%
+  filter(host_health_state == "diseased")
+ggplot(diseased_only, aes(x = host_health_state, y = Host_age)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    title = "Comparison of Host Age by Disease Status",
+    x = "Disease Status",
+    y = "Host Age"
+  )
+```
+
 
 **Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
 
