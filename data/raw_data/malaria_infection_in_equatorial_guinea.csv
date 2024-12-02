@@ -1,5 +1,5 @@
-age_group,non_infected,malaria_infection,sars_cov_2_infection,sars_cov_2_and_malaria_infection,total
-5 - 12,158,96,9,2,265
-13 - 20,203,112,9,1,325
-21 - 40,572,129,20,2,723
-> 40,204,42,8,1,255
+age_group,non_infected,malaria_infection,sars_cov_2_infection,sars_cov_2_and_malaria_infection,subtotal,final_total
+5 - 12,158,96,9,2,265,1568
+13 - 20,203,112,9,1,325,
+21 - 40,572,129,20,2,723,
+> 40,204,42,8,1,255,

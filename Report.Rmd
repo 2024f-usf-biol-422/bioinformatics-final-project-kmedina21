@@ -43,6 +43,7 @@ library("vcfR")
 library("ggplot2")
 library("dplyr")
 library("ggthemes")
+library("tidyr")
 
 # this loads all function files in the code/functions directory
 function_paths <- list.files("code/functions", full.names = TRUE)
@@ -145,6 +146,24 @@ ggplot(vcf_with_metadata, aes(x = pos,y = qual)) +
     title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
     x = "Genomic Position",
     y = "Quality score")
+```
+
+```{r, plot-malaria-vs-non-infected}
+infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+malaria_infection_only <- infection_data %>%
+  mutate(Non_Infected = subtotal - malaria_infection)
+
+malaria_infection_only_long <- malaria_infection_only %>%
+  gather(key = "Status", value = "Count", malaria_infection, Non_Infected)
+
+ggplot(malaria_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +  # position = "stack" for stacking
+  labs(
+    title = "Malaria Infections vs Grand Total (Non-Malaria Infected)",
+    x = "Category",
+    y = "Count",
+    fill = "Status"
+  )
 ```
 
 
