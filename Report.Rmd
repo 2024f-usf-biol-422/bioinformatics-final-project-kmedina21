@@ -127,6 +127,15 @@ ggplot(sra_run_table, aes(x = host_sex)) +
 
 ```
 
+```{r, plot-alt-across-genome}
+ggplot(vcf_with_metadata,aes(x = pos,y = alt)) +
+  geom_point(size = 1.5) +
+  labs(
+    title = "Alternate SNPs Across the Genome",
+    x = "Genomic Position",
+    y = "Chromosome")
+```
+
 
 
 **Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
