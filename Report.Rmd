@@ -157,15 +157,33 @@ malaria_infection_only_long <- malaria_infection_only %>%
   gather(key = "Status", value = "Count", malaria_infection, Non_Infected)
 
 ggplot(malaria_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
-  geom_bar(stat = "identity", position = "stack") +  # position = "stack" for stacking
+  geom_bar(stat = "identity", position = "stack") +  
   labs(
-    title = "Malaria Infections vs Grand Total (Non-Malaria Infected)",
+    title = "Plasmodium falciparum Infections vs Grand Total (Non-Plasmodium 
+falciparum Infected)",
     x = "Category",
     y = "Count",
     fill = "Status"
   )
 ```
 
+```{r, plot-covid-vs-non-infected}
+infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+covid_infection_only <- infection_data %>%
+  mutate(Non_Infected = subtotal - sars_cov_2_infection)
+
+covid_infection_only_long <- covid_infection_only %>%
+  gather(key = "Status", value = "Count", sars_cov_2_infection, Non_Infected)
+
+ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +  
+  labs(
+    title = "SARS-CoV-2 Infections vs Grand Total (Non-SARS-CoV-2 Infected)",
+    x = "Category",
+    y = "Count",
+    fill = "Status"
+  )
+```
 
 
 **Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
