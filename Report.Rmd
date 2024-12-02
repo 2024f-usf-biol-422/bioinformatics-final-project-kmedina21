@@ -116,7 +116,9 @@ ggplot(diseased_only, aes(x = host_health_state, y = Host_age)) +
 
 ```{r, sex-vs-host-health-state}
 sra_run_table <- read.csv("data/00_sra_runtable/SraRunTable.csv")
-ggplot(sra_run_table, aes(x = host_sex)) +
+diseased_only <- sra_run_table %>%
+  filter(host_health_state == "diseased")
+ggplot(diseased_only, aes(x = host_sex)) +
   geom_bar(fill = "skyblue") +
   theme_minimal() +
   labs(
