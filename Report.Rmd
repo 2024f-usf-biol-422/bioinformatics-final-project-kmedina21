@@ -140,7 +140,7 @@ ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
 ```
 
 ```{r, plot-qual-across-genome}
-ggplot(vcf_with_metadata, aes(x = pos,y = qual)) +
+ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
   geom_point(size = 1.5) +
   labs(
     title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
