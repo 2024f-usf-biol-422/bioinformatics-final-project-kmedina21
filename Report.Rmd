@@ -20,7 +20,16 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Background and Overview
 
-This is a report on SARS-CoV-2, including some variant analysis [@koyama2020variant].
+*Plasmodium falciparum* is a unicellular parasite known to cause malaria in humans. While it is not the sole source of malaria, with *Plasmodium vivax* also a great contributor to the disease, it is the deadliest species of *Plasmodium*. This parasite is transmitted through the bite of a female Anopheles mosquito and when a human is infected they become sick with malaria [@whoMalaria]. Malaria is incredibly deadly as it can cause organ failure, anemia, pulmonary edema, among other illnesses. According to the World Health Organization, in 2021 there were an estimated 348,428 cases of malaria in Equatorial Guinea with 785 deaths and it remains a major public health problem in the area [@whoEGdata]. Due to its prevalence, it is a significant cause of death for children under the age of 5 with a mortality rate of 77 per 1000 live births. 
+
+While malaria had been a long-standing issue in the region, early 2020 had marked the start of the COVID-19 pandemic, with the SARS-CoV-2 virus causing the disease and adding an extra burden on the healthcare system of Equatorial Guinea. According to worldometer, which tracks Coronavirus cases, by the end of 2021 there were 13,637 positive cases of SARS-CoV-2 in the area. This is significantly less than *Plasmodium falciparum* infections however this number may be underreported due to lack of accessibility to healthcare and thus lack of testing of the population. 
+
+Having both diseases present in an area where healthcare can be inaccessible and hard to get to, co-infections are a likely occurrence. However, according to the study by López-Farfán, et al., only 6 out of 1,556 cases were found to be co-infected with both *Plasmodium falciparum* and SARS-CoV-2 during the course of their study. They also reported that these co-infections were mild. Of the 1,556 cases, 43 genomes of SARS-CoV-2 isolates were sequences, most of which belonged to the Delta variant. The primary goal of this report was with the 43 genome sequences to explore how prevalent SARS-CoV-2 is in Equatorial Guinea in different identity groups such as sex or age and if any identity group was more susceptible to infection in an area where healthcare may not be the most accessible and other illnesses such as malaria are long-standing issues. 
+
+After downloading the metadata from the National Center for Biotechnology Information (NCBI) BioProject database, I used various bash-script commands to explore the dataset and different variables it contained to help achieve the primary goal of this report. R script and code was then used to create the figures in this report to help better visualize the data. 
+
+After doing these analyses, I found that women in their late 20’s were more likely to be infected with SARS-CoV-2 in Equatorial Guinea. However, due to inaccessibility to healthcare and the small sample size associated with the dataset, this conclusion may not be the most accurate as people from older age groups may not have been able to volunteer for this study and thus their data was not added to the dataset.
+
 
 # Methods
 
