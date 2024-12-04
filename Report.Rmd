@@ -1,5 +1,5 @@
 ---
-title: 'Your Title Here'
+title: 'Prevelance of SARS-CoV-2 Among Identity Groups in Equatorial Guinea and Co-Infection with *Plasmodium falciparum*'
 author: "Kim Medina"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
