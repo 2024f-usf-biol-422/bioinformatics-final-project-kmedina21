@@ -87,7 +87,8 @@ vcf_with_metadata <-
 # Figures
 
 ```{r, plot-malaria-vs-non-infected}
-infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+infection_data <- read.csv("data/raw_data/
+                           malaria_infection_in_equatorial_guinea.csv")
 malaria_infection_only <- infection_data %>%
   mutate(Non_Infected = subtotal - malaria_infection)
 
@@ -95,7 +96,7 @@ malaria_infection_only_long <- malaria_infection_only %>%
   gather(key = "Status", value = "Count", malaria_infection, Non_Infected)
 
 ggplot(malaria_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
-  geom_bar(stat = "identity", position = "stack") +  
+  geom_bar(stat = "identity", position = "stack") +
   labs(
     title = "Plasmodium falciparum Infections vs Grand Total (Non-Plasmodium 
 falciparum Infected)",
@@ -108,7 +109,8 @@ falciparum Infected)",
 **Figure 1**: *Plasmodium falciparum* infections is less than non-*Plasmodium falciparum* infections.
 
 ```{r, plot-covid-vs-non-infected}
-infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+infection_data <- read.csv("data/raw_data/
+                           malaria_infection_in_equatorial_guinea.csv")
 covid_infection_only <- infection_data %>%
   mutate(Non_Infected = subtotal - sars_cov_2_infection)
 
@@ -116,7 +118,7 @@ covid_infection_only_long <- covid_infection_only %>%
   gather(key = "Status", value = "Count", sars_cov_2_infection, Non_Infected)
 
 ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
-  geom_bar(stat = "identity", position = "stack") +  
+  geom_bar(stat = "identity", position = "stack") +
   labs(
     title = "SARS-CoV-2 Infections vs Grand Total (Non-SARS-CoV-2 Infected)",
     x = "Category",
@@ -162,9 +164,9 @@ ggplot(diseased_only, aes(x = host_sex)) +
 ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
   geom_point(size = 1.5) +
   labs(
-    title = "Alternate SNPs Across the Genome",
-    x = "Genomic Position",
-    y = "Chromosome")
+      title = "Alternate SNPs Across the Genome",
+      x = "Genomic Position",
+      y = "Chromosome")
 ```
 
 **Figure 5**: Most of the alternate SNPs are found at the ends of the genome.
@@ -172,10 +174,10 @@ ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
 ```{r, plot-qual-across-genome}
 ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
   geom_point(size = 1.5) +
-  labs(
-    title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
-    x = "Genomic Position",
-    y = "Quality score")
+    labs(
+      title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
+      x = "Genomic Position",
+      y = "Quality score")
 ```
 
 **Figure 6**: Most SNPs reported a quality score of 225 or 228.
