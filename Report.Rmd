@@ -122,38 +122,6 @@ ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
 ```
 **Figure 2**: SARS-CoV-2 has significantly less infections than *Plasmodium falciparum*.
 
-
-```{r sample-plot}
-# create a plot of unique SNP locations within each gene across all samples
-vcf_with_metadata %>%
-  filter(!is.na(gene)) %>% # get rid of SNPs not in gene regions
-  group_by(gene, pos) %>%
-  tally() %>% # this gives a column n for the number of gene by position
-  group_by(gene) %>%
-  tally() %>% # this collapses that down to the number of unique SNP locations
-  ggplot(aes(x = gene,
-             y = n)) +
-  geom_col() +
-  labs(title = "Count of distinct SNPs in Named SARS-CoV-2 Genes",
-       x = "Gene Name") +
-  theme_few() # get rid of the grey background
-```
-
-**Figure 1**: N and S genes have more unique SNPs in the set of samples analyzed.
-
-# Tables
-
-```{r example-table}
-# An example table to show the length of each gene using its start and end
-gene_table %>%
-  mutate(length = end - start) %>%
-  select(gene_name, start, end, length) %>%
-  knitr::kable(col.names = c("Gene Name",
-                             "Start",
-                             "End",
-                             "Length"))
-```
-
 ```{r, average-age-of-diseased}
 diseased_only <- vcf_with_metadata %>%
   filter(host_health_state == "diseased")
@@ -161,11 +129,12 @@ ggplot(diseased_only, aes(x = host_health_state, y = Host_age)) +
   geom_boxplot() +
   theme_minimal() +
   labs(
-    title = "Comparison of Host Age by Disease Status",
+    title = "Host Age and Disease Status",
     x = "Disease Status",
     y = "Host Age"
   )
 ```
+**Figure 3**: Average age of the hosts of the 43 genomes sequenced is 28 years old.
 
 ```{r, sex-vs-host-health-state}
 sra_run_table <- read.csv("data/00_sra_runtable/SraRunTable.csv")
@@ -175,12 +144,12 @@ ggplot(diseased_only, aes(x = host_sex)) +
   geom_bar(fill = "skyblue") +
   theme_minimal() +
   labs(
-    title = "Comparison of Host Sex by Count",
+    title = "Diseased Host Sex by Count",
     x = "Host Sex",
     y = "Count"
   )
-
 ```
+**Figure 4**: More females were infected with SARS-CoV-2 than males.
 
 ```{r, plot-alt-across-genome}
 ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
@@ -190,6 +159,7 @@ ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
     x = "Genomic Position",
     y = "Chromosome")
 ```
+**Figure 5**: Most of the alternate SNPs are found at the ends of the genome.
 
 ```{r, plot-qual-across-genome}
 ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
@@ -199,10 +169,6 @@ ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
     x = "Genomic Position",
     y = "Quality score")
 ```
-
-
-
-
-**Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
+**Figure 6**: Most SNPs reported a quality score of 225 or 228.
 
 # Sources Cited
