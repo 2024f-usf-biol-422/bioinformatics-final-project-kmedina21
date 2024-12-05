@@ -8,7 +8,7 @@ November 18, 2024
 
 ## Brief Overview
 
-This project aims to analyze the dataset obtained from the National Center for Biotechnology Information about SARS-CoV-2 circulation and co-infection with *Plasmodium falciparum* in Equatorial Guinea. It aims to analyze the host age, sex, and health state in relation to average spot length. 
+This project aims to analyze the dataset obtained from the National Center for Biotechnology Information about SARS-CoV-2 circulation and co-infection with *Plasmodium falciparum* in Equatorial Guinea. The primary goal of this report was with the 43 genome sequences to explore how prevalent SARS-CoV-2 is in Equatorial Guinea in different identity groups such as sex or age and if any identity group was more susceptible to infection in an area where healthcare may not be the most accessible and other illnesses such as malaria are long-standing issues. 
 
 ## SRA Bioproject Details
 
