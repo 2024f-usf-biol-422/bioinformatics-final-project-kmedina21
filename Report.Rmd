@@ -33,17 +33,12 @@ After doing these analyses, I found that women in their late 20’s were more li
 
 # Methods
 
-See the set of tutorials on the [vcfR package website](https://knausb.github.io/vcfR_documentation/index.html).
+In order to achieve the primary goal of this report, I searched through the National Center for Biotechnology Information BioProject database and extracted the metadata from the Circulation of SARS-CoV-2 and co-infection with *Plasmodium falciparum* in Equatorial Guinea project. This particular project had a research paper and other related data affiliated with the metadata. However, this research paper had not been peer-reviewed yet so I used this to gain a better understanding of the context in which the metadata was used or why it was specifically chosen to be sequenced rather than drawing concrete conclusions from it. 
 
-You may also want to use any of a range of different COVID data packages and data sources:
+Using various bioinformatics methods and techniques, I did exploratory data analysis on the obtained metadata on the tule server and used different bash script commands. Since the initial SRA run table does not show the SNPs of the sequenced genomes as well as their quality scores, the cat command was used to display the content of the file and head was used to gain a better understanding of the first few lines of the file. On the other hand, tail was used to know the last few lines of the file. I used bioawk to parse through the FASTQ file [@bioawk]. 
 
-* https://kjhealy.github.io/covdata/
-* https://github.com/como-ph/oxcovid19
-* https://ropensci.org/blog/2020/10/20/searching-medrxivr-and-biorxiv-preprint-data/
-* https://covidtracking.com/data/api
-  * `readr::read_csv("https://api.covidtracking.com/v1/states/daily.csv")`
+Aside from bash script commands, I used different R packages to aid in the visualization of the data. vcfR was used to work with and read the VCF files generated from the makefile pathway from the metadata [@vcfR]. In order to organize the data and filter the needed variables to be used for visualization, the dplyr R package was used [@dplyr]. ggplot2 [@ggplot2] and ggthemes [@ggthemes] were used together in order to create the figures in this report. The last R package used is tidyr which tidied up the dataset and converted the data into a long format [@tidyr]. Lastly, to visualize the SNPs in the sequences of the dataset, I used the Integrative Genomics Viewer to map the sequences to the reference SARS-CoV-2 genome and see where SNPs may be prevalent [@IGV].
 
-## Subsections are ok too
 
 # Results and Discussion
 
