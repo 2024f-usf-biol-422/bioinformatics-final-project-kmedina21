@@ -1,14 +1,17 @@
 ---
-title: 'Prevelance of SARS-CoV-2 Among Identity Groups in Equatorial Guinea and Co-Infection with *Plasmodium falciparum*'
+title: Prevelance of SARS-CoV-2 Among Identity Groups in Equatorial Guinea and Co-Infection
+  with *Plasmodium falciparum*
 author: "Kim Medina"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 csl: bioinformatics.csl
 bibliography: references.bib
 params:
-  gff_file_path: "data/metadata/sars_refgenome_annotation.gff"
-  vcf_dir_path: "data/11_vcf_output_for_R"
-  sra_runtable_path: "data/00_sra_runtable/SraRunTable.csv"
+  gff_file_path: data/metadata/sars_refgenome_annotation.gff
+  vcf_dir_path: data/11_vcf_output_for_R
+  sra_runtable_path: data/00_sra_runtable/SraRunTable.csv
 ---
 
 ```{r setup, include = FALSE}
@@ -101,6 +104,7 @@ falciparum Infected)",
     fill = "Status"
   )
 ```
+
 **Figure 1**: *Plasmodium falciparum* infections is less than non-*Plasmodium falciparum* infections.
 
 ```{r, plot-covid-vs-non-infected}
@@ -120,6 +124,7 @@ ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
     fill = "Status"
   )
 ```
+
 **Figure 2**: SARS-CoV-2 has significantly less infections than *Plasmodium falciparum*.
 
 ```{r, average-age-of-diseased}
@@ -134,6 +139,7 @@ ggplot(diseased_only, aes(x = host_health_state, y = Host_age)) +
     y = "Host Age"
   )
 ```
+
 **Figure 3**: Average age of the hosts of the 43 genomes sequenced is 28 years old.
 
 ```{r, sex-vs-host-health-state}
@@ -149,6 +155,7 @@ ggplot(diseased_only, aes(x = host_sex)) +
     y = "Count"
   )
 ```
+
 **Figure 4**: More females were infected with SARS-CoV-2 than males.
 
 ```{r, plot-alt-across-genome}
@@ -159,6 +166,7 @@ ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
     x = "Genomic Position",
     y = "Chromosome")
 ```
+
 **Figure 5**: Most of the alternate SNPs are found at the ends of the genome.
 
 ```{r, plot-qual-across-genome}
@@ -169,6 +177,7 @@ ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
     x = "Genomic Position",
     y = "Quality score")
 ```
+
 **Figure 6**: Most SNPs reported a quality score of 225 or 228.
 
 # Sources Cited
