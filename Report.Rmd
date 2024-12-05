@@ -110,7 +110,7 @@ falciparum Infected)",
 
 ```{r, plot-covid-vs-non-infected}
 infection_data <- read.csv(
-"data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+  "data/raw_data/malaria_infection_in_equatorial_guinea.csv")
 covid_infection_only <- infection_data %>%
   mutate(Non_Infected = subtotal - sars_cov_2_infection)
 
@@ -163,10 +163,9 @@ ggplot(diseased_only, aes(x = host_sex)) +
 ```{r, plot-alt-across-genome}
 ggplot(vcf_with_metadata, aes(x = pos, y = alt)) +
   geom_point(size = 1.5) +
-  labs(
-      title = "Alternate SNPs Across the Genome",
-      x = "Genomic Position",
-      y = "Chromosome")
+  labs(title = "Alternate SNPs Across the Genome",
+       x = "Genomic Position",
+       y = "Chromosome")
 ```
 
 **Figure 5**: Most of the alternate SNPs are found at the ends of the genome.
@@ -174,10 +173,9 @@ ggplot(vcf_with_metadata, aes(x = pos, y = alt)) +
 ```{r, plot-qual-across-genome}
 ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
   geom_point(size = 1.5) +
-    labs(
-      title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
-      x = "Genomic Position",
-      y = "Quality score")
+  labs(title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
+       x = "Genomic Position",
+       y = "Quality score")
 ```
 
 **Figure 6**: Most SNPs reported a quality score of 225 or 228.
