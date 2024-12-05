@@ -42,6 +42,14 @@ Aside from bash script commands, I used different R packages to aid in the visua
 
 # Results and Discussion
 
+The first dataset I decided to analyze were the *Plasmodium falciparum* infections against the non-*Plasmodium falciparum* infections from the overall study López-Farfán, et al., did [@lopez2023circulation]. Figure 1 shows that there were 379 *Plasmodium falciparum* infections out of 1,556 cases, which is a 24% infection rate. This is similar to the 213.2 cases per 1,000 (21.3%) statistic cited by the World Health Organization regarding malaria infections in Equatorial Guinea. So this outcome is to be expected. However, Figure 2 shows that there was significantly less SARS-CoV-2 infections compared to *Plasmodium falciparum*, with there only being a total of 46 SARS-CoV-2 infections. This might come as surprising considering how significant of an epidemic COVID-19 is and in a region such as Equatorial Guinea, it might be expected that SARS-CoV-2 would be more prevalent than a 2.9% infection rate. In spite of that, the reported number of SARS-CoV-2 infections may be underreported due to numerous factors. Lack of accessibility to healthcare may prevent people from getting tested. Such as, people in the older age group may not have been able to go to health care centers to get tested, thus the data point not being added to the dataset. Another reason may be due to the small sample size the researchers obtained as Equatorial Guinea has a population of 1.715 million.
+
+Talking more about the different identity groups that were infected with SARS-CoV-2 and had their genomes sequenced, Figure 3 shows the range of ages these individuals are. The average age being 28 years old while most hosts fell in the range of mid-teens to mid-30s. Once again, this may not be the most accurate result because of the reasons stated above — specifically, for the older age group. Looking into the sexes of the hosts, Figure 4 shows how much of each sex was infected, with 4 cases being female while 19 were male. With these findings, I can surmise that women in their late 20’s were more likely to be infected with SARS-CoV-2 in Equatorial Guinea. Obtaining this information is significant as it can aid in making healthcare more accessible to people in that identity group since other illnesses are prevalent in the area and may worsen the SARS-CoV-2 infection.
+
+Looking deeper into the sequenced genomes, Figure 5 shows where SNPs are across the genomes and it can be seen that most of the alternative SNPs are the T nucleotide, with less variation in the middle of the genome and more so at the ends. Figure 6 shows the quality scores of these SNPs and their position on the genome. Putting these two figures together it can be said that most of the SNPs read are of high quality more so at the end of the genome. However, in general, the reads done were of high quality with numerous quality scores of 225 or 228. 
+
+After doing all these data exploration and analyses, we can look back into the initial goal of this report. The initial goal I had for this project was to explore how prevalent SARS-CoV-2 is in Equatorial Guinea in different identity groups such as sex or age and if any identity group was more susceptible to infection. I would then conclude, with the dataset I obtained, that women in their late 20’s were more likely to be infected with SARS-CoV-2 in Equatorial Guinea. This could be significant as it can aid in making healthcare more accessible to people in that identity group since other illnesses are prevalent in the area and may worsen the SARS-CoV-2 infection.
+
 ```{r load-packages-and-functions}
 library("vcfR")
 library("ggplot2")
@@ -74,6 +82,46 @@ vcf_with_metadata <-
 ```
 
 # Figures
+
+```{r, plot-malaria-vs-non-infected}
+infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+malaria_infection_only <- infection_data %>%
+  mutate(Non_Infected = subtotal - malaria_infection)
+
+malaria_infection_only_long <- malaria_infection_only %>%
+  gather(key = "Status", value = "Count", malaria_infection, Non_Infected)
+
+ggplot(malaria_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +  
+  labs(
+    title = "Plasmodium falciparum Infections vs Grand Total (Non-Plasmodium 
+falciparum Infected)",
+    x = "Category",
+    y = "Count",
+    fill = "Status"
+  )
+```
+**Figure 1**: *Plasmodium falciparum* infections is less than non-*Plasmodium falciparum* infections.
+
+```{r, plot-covid-vs-non-infected}
+infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
+covid_infection_only <- infection_data %>%
+  mutate(Non_Infected = subtotal - sars_cov_2_infection)
+
+covid_infection_only_long <- covid_infection_only %>%
+  gather(key = "Status", value = "Count", sars_cov_2_infection, Non_Infected)
+
+ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +  
+  labs(
+    title = "SARS-CoV-2 Infections vs Grand Total (Non-SARS-CoV-2 Infected)",
+    x = "Category",
+    y = "Count",
+    fill = "Status"
+  )
+```
+**Figure 2**: SARS-CoV-2 has significantly less infections than *Plasmodium falciparum*.
+
 
 ```{r sample-plot}
 # create a plot of unique SNP locations within each gene across all samples
@@ -152,42 +200,7 @@ ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
     y = "Quality score")
 ```
 
-```{r, plot-malaria-vs-non-infected}
-infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
-malaria_infection_only <- infection_data %>%
-  mutate(Non_Infected = subtotal - malaria_infection)
 
-malaria_infection_only_long <- malaria_infection_only %>%
-  gather(key = "Status", value = "Count", malaria_infection, Non_Infected)
-
-ggplot(malaria_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
-  geom_bar(stat = "identity", position = "stack") +  
-  labs(
-    title = "Plasmodium falciparum Infections vs Grand Total (Non-Plasmodium 
-falciparum Infected)",
-    x = "Category",
-    y = "Count",
-    fill = "Status"
-  )
-```
-
-```{r, plot-covid-vs-non-infected}
-infection_data <- read.csv("data/raw_data/malaria_infection_in_equatorial_guinea.csv")
-covid_infection_only <- infection_data %>%
-  mutate(Non_Infected = subtotal - sars_cov_2_infection)
-
-covid_infection_only_long <- covid_infection_only %>%
-  gather(key = "Status", value = "Count", sars_cov_2_infection, Non_Infected)
-
-ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
-  geom_bar(stat = "identity", position = "stack") +  
-  labs(
-    title = "SARS-CoV-2 Infections vs Grand Total (Non-SARS-CoV-2 Infected)",
-    x = "Category",
-    y = "Count",
-    fill = "Status"
-  )
-```
 
 
 **Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
