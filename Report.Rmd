@@ -87,8 +87,8 @@ vcf_with_metadata <-
 # Figures
 
 ```{r, plot-malaria-vs-non-infected}
-infection_data <- read.csv("data/raw_data/
-                           malaria_infection_in_equatorial_guinea.csv")
+infection_data <- read.csv(
+  "data/raw_data/malaria_infection_in_equatorial_guinea.csv")
 malaria_infection_only <- infection_data %>%
   mutate(Non_Infected = subtotal - malaria_infection)
 
@@ -109,8 +109,8 @@ falciparum Infected)",
 **Figure 1**: *Plasmodium falciparum* infections is less than non-*Plasmodium falciparum* infections.
 
 ```{r, plot-covid-vs-non-infected}
-infection_data <- read.csv("data/raw_data/
-                           malaria_infection_in_equatorial_guinea.csv")
+infection_data <- read.csv(
+"data/raw_data/malaria_infection_in_equatorial_guinea.csv")
 covid_infection_only <- infection_data %>%
   mutate(Non_Infected = subtotal - sars_cov_2_infection)
 
@@ -161,7 +161,7 @@ ggplot(diseased_only, aes(x = host_sex)) +
 **Figure 4**: More females were infected with SARS-CoV-2 than males.
 
 ```{r, plot-alt-across-genome}
-ggplot(vcf_with_metadata, aes(x = pos,y = alt)) +
+ggplot(vcf_with_metadata, aes(x = pos, y = alt)) +
   geom_point(size = 1.5) +
   labs(
       title = "Alternate SNPs Across the Genome",
