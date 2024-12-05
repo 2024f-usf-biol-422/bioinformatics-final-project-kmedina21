@@ -1,4 +1,4 @@
-# README for Final Project Analysis of SARS-CoV-2 and *Plasmodium falciparum* co-infection
+# README for Final Project Analysis of Prevelance of SARS-CoV-2 Among Identity Groups in Equatorial Guinea and Co-Infection
 
 Parts of this pipeline approach are based on the pipeline described in the [Data Carpentry Genomics lessons](https://datacarpentry.org/genomics-workshop/), which are made available under a [CC-BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
 
