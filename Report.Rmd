@@ -1,14 +1,17 @@
 ---
-title: 'Your Title Here'
-author: "Don Francisco"
+title: Prevelance of SARS-CoV-2 Among Identity Groups in Equatorial Guinea and Co-Infection
+  with *Plasmodium falciparum*
+author: "Kim Medina"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 csl: bioinformatics.csl
 bibliography: references.bib
 params:
-  gff_file_path: "data/metadata/sars_refgenome_annotation.gff"
-  vcf_dir_path: "data/11_vcf_output_for_R"
-  sra_runtable_path: "data/00_sra_runtable/SraRunTable_PRJNA656695_short_example.txt"
+  gff_file_path: data/metadata/sars_refgenome_annotation.gff
+  vcf_dir_path: data/11_vcf_output_for_R
+  sra_runtable_path: data/00_sra_runtable/SraRunTable.csv
 ---
 
 ```{r setup, include = FALSE}
@@ -20,29 +23,42 @@ knitr::opts_chunk$set(echo = FALSE,
 
 # Background and Overview
 
-This is a report on SARS-CoV-2, including some variant analysis [@koyama2020variant].
+*Plasmodium falciparum* is a unicellular parasite known to cause malaria in humans. While it is not the sole source of malaria, with *Plasmodium vivax* also a great contributor to the disease, it is the deadliest species of *Plasmodium*. This parasite is transmitted through the bite of a female Anopheles mosquito and when a human is infected they become sick with malaria [@whoMalaria]. Malaria is incredibly deadly as it can cause organ failure, anemia, pulmonary edema, among other illnesses. According to the World Health Organization, in 2021 there were an estimated 348,428 cases of malaria in Equatorial Guinea with 785 deaths and it remains a major public health problem in the area [@whoEGdata]. Due to its prevalence, it is a significant cause of death for children under the age of 5 with a mortality rate of 77 per 1000 live births. 
+
+While malaria had been a long-standing issue in the region, early 2020 had marked the start of the COVID-19 pandemic, with the SARS-CoV-2 virus causing the disease and adding an extra burden on the healthcare system of Equatorial Guinea. According to worldometer, which tracks Coronavirus cases, by the end of 2021 there were 13,637 positive cases of SARS-CoV-2 in the area. This is significantly less than *Plasmodium falciparum* infections however this number may be underreported due to lack of accessibility to healthcare and thus lack of testing of the population. 
+
+Having both diseases present in an area where healthcare can be inaccessible and hard to get to, co-infections are a likely occurrence. However, according to the study by López-Farfán, et al., only 6 out of 1,556 cases were found to be co-infected with both *Plasmodium falciparum* and SARS-CoV-2 during the course of their study. They also reported that these co-infections were mild. Of the 1,556 cases, 43 genomes of SARS-CoV-2 isolates were sequences, most of which belonged to the Delta variant. The primary goal of this report was with the 43 genome sequences to explore how prevalent SARS-CoV-2 is in Equatorial Guinea in different identity groups such as sex or age and if any identity group was more susceptible to infection in an area where healthcare may not be the most accessible and other illnesses such as malaria are long-standing issues. 
+
+After downloading the metadata from the National Center for Biotechnology Information (NCBI) BioProject database, I used various bash-script commands to explore the dataset and different variables it contained to help achieve the primary goal of this report. R script and code was then used to create the figures in this report to help better visualize the data. 
+
+After doing these analyses, I found that women in their late 20’s were more likely to be infected with SARS-CoV-2 in Equatorial Guinea. However, due to inaccessibility to healthcare and the small sample size associated with the dataset, this conclusion may not be the most accurate as people from older age groups may not have been able to volunteer for this study and thus their data was not added to the dataset.
+
 
 # Methods
 
-See the set of tutorials on the [vcfR package website](https://knausb.github.io/vcfR_documentation/index.html).
+In order to achieve the primary goal of this report, I searched through the National Center for Biotechnology Information BioProject database and extracted the metadata from the Circulation of SARS-CoV-2 and co-infection with *Plasmodium falciparum* in Equatorial Guinea project. This particular project had a research paper and other related data affiliated with the metadata. However, this research paper had not been peer-reviewed yet so I used this to gain a better understanding of the context in which the metadata was used or why it was specifically chosen to be sequenced rather than drawing concrete conclusions from it. 
 
-You may also want to use any of a range of different COVID data packages and data sources:
+Using various bioinformatics methods and techniques, I did exploratory data analysis on the obtained metadata on the tule server and used different bash script commands. Since the initial SRA run table does not show the SNPs of the sequenced genomes as well as their quality scores, the cat command was used to display the content of the file and head was used to gain a better understanding of the first few lines of the file. On the other hand, tail was used to know the last few lines of the file. I used bioawk to parse through the FASTQ file [@bioawk]. 
 
-* https://kjhealy.github.io/covdata/
-* https://github.com/como-ph/oxcovid19
-* https://ropensci.org/blog/2020/10/20/searching-medrxivr-and-biorxiv-preprint-data/
-* https://covidtracking.com/data/api
-  * `readr::read_csv("https://api.covidtracking.com/v1/states/daily.csv")`
+Aside from bash script commands, I used different R packages to aid in the visualization of the data. vcfR was used to work with and read the VCF files generated from the makefile pathway from the metadata [@vcfR]. In order to organize the data and filter the needed variables to be used for visualization, the dplyr R package was used [@dplyr]. ggplot2 [@ggplot2] and ggthemes [@ggthemes] were used together in order to create the figures in this report. The last R package used is tidyr which tidied up the dataset and converted the data into a long format [@tidyr]. Lastly, to visualize the SNPs in the sequences of the dataset, I used the Integrative Genomics Viewer to map the sequences to the reference SARS-CoV-2 genome and see where SNPs may be prevalent [@IGV].
 
-## Subsections are ok too
 
 # Results and Discussion
+
+The first dataset I decided to analyze were the *Plasmodium falciparum* infections against the non-*Plasmodium falciparum* infections from the overall study López-Farfán, et al., did [@lopez2023circulation]. Figure 1 shows that there were 379 *Plasmodium falciparum* infections out of 1,556 cases, which is a 24% infection rate. This is similar to the 213.2 cases per 1,000 (21.3%) statistic cited by the World Health Organization regarding malaria infections in Equatorial Guinea. So this outcome is to be expected. However, Figure 2 shows that there was significantly less SARS-CoV-2 infections compared to *Plasmodium falciparum*, with there only being a total of 46 SARS-CoV-2 infections. This might come as surprising considering how significant of an epidemic COVID-19 is and in a region such as Equatorial Guinea, it might be expected that SARS-CoV-2 would be more prevalent than a 2.9% infection rate. In spite of that, the reported number of SARS-CoV-2 infections may be underreported due to numerous factors. Lack of accessibility to healthcare may prevent people from getting tested. Such as, people in the older age group may not have been able to go to health care centers to get tested, thus the data point not being added to the dataset. Another reason may be due to the small sample size the researchers obtained as Equatorial Guinea has a population of 1.715 million.
+
+Talking more about the different identity groups that were infected with SARS-CoV-2 and had their genomes sequenced, Figure 3 shows the range of ages these individuals are. The average age being 28 years old while most hosts fell in the range of mid-teens to mid-30s. Once again, this may not be the most accurate result because of the reasons stated above — specifically, for the older age group. Looking into the sexes of the hosts, Figure 4 shows how much of each sex was infected, with 4 cases being female while 19 were male. With these findings, I can surmise that women in their late 20’s were more likely to be infected with SARS-CoV-2 in Equatorial Guinea. Obtaining this information is significant as it can aid in making healthcare more accessible to people in that identity group since other illnesses are prevalent in the area and may worsen the SARS-CoV-2 infection.
+
+Looking deeper into the sequenced genomes, Figure 5 shows where SNPs are across the genomes and it can be seen that most of the alternative SNPs are the T nucleotide, with less variation in the middle of the genome and more so at the ends. Figure 6 shows the quality scores of these SNPs and their position on the genome. Putting these two figures together it can be said that most of the SNPs read are of high quality more so at the end of the genome. However, in general, the reads done were of high quality with numerous quality scores of 225 or 228. 
+
+After doing all these data exploration and analyses, we can look back into the initial goal of this report. The initial goal I had for this project was to explore how prevalent SARS-CoV-2 is in Equatorial Guinea in different identity groups such as sex or age and if any identity group was more susceptible to infection. I would then conclude, with the dataset I obtained, that women in their late 20’s were more likely to be infected with SARS-CoV-2 in Equatorial Guinea. This could be significant as it can aid in making healthcare more accessible to people in that identity group since other illnesses are prevalent in the area and may worsen the SARS-CoV-2 infection.
 
 ```{r load-packages-and-functions}
 library("vcfR")
 library("ggplot2")
 library("dplyr")
 library("ggthemes")
+library("tidyr")
 
 # this loads all function files in the code/functions directory
 function_paths <- list.files("code/functions", full.names = TRUE)
@@ -70,37 +86,96 @@ vcf_with_metadata <-
 
 # Figures
 
-```{r sample-plot}
-# create a plot of unique SNP locations within each gene across all samples
-vcf_with_metadata %>%
-  filter(!is.na(gene)) %>% # get rid of SNPs not in gene regions
-  group_by(gene, pos) %>%
-  tally() %>% # this gives a column n for the number of gene by position
-  group_by(gene) %>%
-  tally() %>% # this collapses that down to the number of unique SNP locations
-  ggplot(aes(x = gene,
-             y = n)) +
-  geom_col() +
-  labs(title = "Count of distinct SNPs in Named SARS-CoV-2 Genes",
-       x = "Gene Name") +
-  theme_few() # get rid of the grey background
+```{r, plot-malaria-vs-non-infected}
+infection_data <- read.csv("data/raw_data/infections_in_equatorial_guinea.csv")
+malaria_infection_only <- infection_data %>%
+  mutate(Non_Infected = subtotal - malaria_infection)
+
+malaria_infection_only_long <- malaria_infection_only %>%
+  gather(key = "Status", value = "Count", malaria_infection, Non_Infected)
+
+ggplot(malaria_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(
+    title = "Plasmodium falciparum Infections vs Grand Total (Non-Plasmodium 
+falciparum Infected)",
+    x = "Category",
+    y = "Count",
+    fill = "Status"
+  )
 ```
 
-**Figure 1**: N and S genes have more unique SNPs in the set of samples analyzed.
+**Figure 1**: *Plasmodium falciparum* infections is less than non-*Plasmodium falciparum* infections.
 
-# Tables
+```{r, plot-covid-vs-non-infected}
+infection_data <- read.csv("data/raw_data/infections_in_equatorial_guinea.csv")
+covid_infection_only <- infection_data %>%
+  mutate(Non_Infected = subtotal - sars_cov_2_infection)
 
-```{r example-table}
-# An example table to show the length of each gene using its start and end
-gene_table %>%
-  mutate(length = end - start) %>%
-  select(gene_name, start, end, length) %>%
-  knitr::kable(col.names = c("Gene Name",
-                             "Start",
-                             "End",
-                             "Length"))
+covid_infection_only_long <- covid_infection_only %>%
+  gather(key = "Status", value = "Count", sars_cov_2_infection, Non_Infected)
+
+ggplot(covid_infection_only_long, aes(x = Status, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "stack") +
+  labs(
+    title = "SARS-CoV-2 Infections vs Grand Total (Non-SARS-CoV-2 Infected)",
+    x = "Category",
+    y = "Count",
+    fill = "Status"
+  )
 ```
 
-**Table 1**: Gene names, locations, and lengths in the SARS-CoV-2 genome. Higher SNP counts in the S and N genes may be related to the larger size of these genes.
+**Figure 2**: SARS-CoV-2 has significantly less infections than *Plasmodium falciparum*.
+
+```{r, average-age-of-diseased}
+diseased_only <- vcf_with_metadata %>%
+  filter(host_health_state == "diseased")
+ggplot(diseased_only, aes(x = host_health_state, y = Host_age)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    title = "Host Age and Disease Status",
+    x = "Disease Status",
+    y = "Host Age"
+  )
+```
+
+**Figure 3**: Average age of the hosts of the 43 genomes sequenced is 28 years old.
+
+```{r, sex-vs-host-health-state}
+sra_run_table <- read.csv("data/00_sra_runtable/SraRunTable.csv")
+diseased_only <- sra_run_table %>%
+  filter(host_health_state == "diseased")
+ggplot(diseased_only, aes(x = host_sex)) +
+  geom_bar(fill = "skyblue") +
+  theme_minimal() +
+  labs(
+    title = "Diseased Host Sex by Count",
+    x = "Host Sex",
+    y = "Count"
+  )
+```
+
+**Figure 4**: More females were infected with SARS-CoV-2 than males.
+
+```{r, plot-alt-across-genome}
+ggplot(vcf_with_metadata, aes(x = pos, y = alt)) +
+  geom_point(size = 1.5) +
+  labs(title = "Alternate SNPs Across the Genome",
+       x = "Genomic Position",
+       y = "Chromosome")
+```
+
+**Figure 5**: Most of the alternate SNPs are found at the ends of the genome.
+
+```{r, plot-qual-across-genome}
+ggplot(vcf_with_metadata, aes(x = pos, y = as.numeric(qual))) +
+  geom_point(size = 1.5) +
+  labs(title = "SNP Quality of Sample Across SARS-Cov-2 Genome",
+       x = "Genomic Position",
+       y = "Quality score")
+```
+
+**Figure 6**: Most SNPs reported a quality score of 225 or 228.
 
 # Sources Cited
